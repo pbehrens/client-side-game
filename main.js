@@ -1,148 +1,132 @@
-rot = 1
-gelb = 2
-ausserhalb = 3
-leer = 0
+red = 1
+yellow = 2
+outside = 3
+read = 0
 
-feld =  new Array(0,0,0,0,0,0,0);
-	feld[0] = new Array(0,0,0,0,0,0);
-	feld[1] = new Array(0,0,0,0,0,0);
-	feld[2] = new Array(0,0,0,0,0,0);
-	feld[3] = new Array(0,0,0,0,0,0);
-	feld[4] = new Array(0,0,0,0,0,0);
-	feld[5] = new Array(0,0,0,0,0,0);
-	feld[6] = new Array(0,0,0,0,0,0);
+field =  new Array(0,0,0,0,0,0,0);
+	field[0] = new Array(0,0,0,0,0,0);
+	field[1] = new Array(0,0,0,0,0,0);
+	field[2] = new Array(0,0,0,0,0,0);
+	field[3] = new Array(0,0,0,0,0,0);
+	field[4] = new Array(0,0,0,0,0,0);
+	field[5] = new Array(0,0,0,0,0,0);
+	field[6] = new Array(0,0,0,0,0,0);
 
-hoehe =  new Array(5,5,5,5,5,5,5); 
+height =  new Array(5,5,5,5,5,5,5); 
 
-function get(spalte, zeile)
-{
-if ((spalte < 0) || (spalte > 6) || (zeile < 0) || (zeile > 5)) {return ausserhalb}
-else {return (feld[spalte][zeile])} 
+function get(column, row){
+	if ((column < 0) || (column > 6) || (row < 0) || (row > 5)) {
+		return outside;
+	}
+	else {
+		return (field[column][row]);
+	}
 }       
 
-function put(spalte,farbe)
-{
-
-//alert("write");
-
-
-		if (farbe == rot) 
-			document.getElementById("IEschreiben").innerHTML = document.getElementById("IEschreiben").innerHTML + 
-			'<div style="position:absolute; top:'+(hoehe[spalte]*60+62)+'px; left:'+(spalte*60-1)+'px;"><img src="red.png" width=66 height = 66> </div>';
-		if (farbe == gelb) 
-			document.getElementById("IEschreiben").innerHTML = document.getElementById("IEschreiben").innerHTML + 
-			'<div style="position:absolute; top:'+(hoehe[spalte]*60+68)+'px; left:'+(spalte*60+3)+'px;"><img src="yellow.png" width=55 height = 55> </div>';
-
-
-	
+function put(column,color){
+		if (color == red) 
+			document.getElementById("board").innerHTML = document.getElementById("board").innerHTML + 
+			'<div style="position:absolute; top:'+(height[column]*60+62)+'px; left:'+(column*60-1)+'px;"><img src="red.png" width=66 height = 66> </div>';
+		if (color == yellow) 
+			document.getElementById("board").innerHTML = document.getElementById("board").innerHTML + 
+			'<div style="position:absolute; top:'+(height[column]*60+68)+'px; left:'+(column*60+3)+'px;"><img src="yellow.png" width=55 height = 55> </div>';
 }
 
 
-var gewonnen=false;
+var won=false;
 
-function gesetzt(spalte)
-{
-	if (hoehe[spalte] == -1) alert("column full")
+function set(column){
+	if (height[column] == -1){
+		alert("column full")	
+	}
 	else
 	{
-		feld[spalte][hoehe[spalte]] = rot;
-		hoehe[spalte] = hoehe[spalte] - 1;
-		put(spalte,rot);
+		field[column][height[column]] = red;
+		height[column] = height[column] - 1;
+		put(column,red);
 		
-			if (pruefe(spalte,hoehe[spalte]+1,4,rot,false) == true) 
+			if (check(column,height[column]+1,4,red,false) == true) 
 			{
-				gewonnen=true;
+				won=true;
 				alert("You win");
 				location.reload();
 			}
-			if ((hoehe[0] == -1) && (hoehe[1] == -1) && (hoehe[2] == -1) && (hoehe[3] == -1) && (hoehe[4] == -1)  && (hoehe[5] == -1) && (hoehe[6] == -1)) 
+			if ((height[0] == -1) && (height[1] == -1) && (height[2] == -1) && (height[3] == -1) && (height[4] == -1)  && (height[5] == -1) && (height[6] == -1)) 
 			{
 				alert("Draw Game");
 				location.reload();
 			}
-			if (gewonnen != true) computer();       
-		
+			if (won != true) computer();
 	}
 }
 
-/*
- *      function pruefe
- *      Beschreibung: sucht an Koordianten "x,y", ob "menge" Steine in der "farbe" waagrecht,diagonal oder senkrecht aufzufinden sind.
- *      und ob noch die restlichen Stellen für die Erschaffung eines Vierers ausreichen
- *      pruefe_bei_2: prüft ob 4. Stein gleich gesetzt werden kann(ansonsten könnte der Gegner den werdenden Vierer gleich zerstören)
- */
-
-function pruefe(x,y,menge,farbe,pruefe_bei_2)
-{
+function check(x,y,menge,color,check_with_2){
 
 	var i,j,k;
-	var summe1,summe2,summe3,summe4;
-	var summe12,summe22,summe32,summe42;
-	var farbe2;
-	var ja=false;
+	var total1,total2,total3,total4;
+	var total12,total22,total32,total42;
+	var color2;
+	var yes=false;
 
-	if (farbe == rot) {farbe2 = gelb} else {farbe2 = rot}; /*Gegnerfarbe bestimmen*/
-	for (k=0;k<=3;k++)
-	{
-		summe1 = 0;
-		summe2 = 0;
-		summe3 = 0;
-		summe4 = 0;
-		summe12 = 0;
-		summe22 = 0;
-		summe32 = 0;
-		summe42 = 0;
+	if (color == red) {color2 = yellow;} else {color2 = red;}; 
+	for (k=0;k<=3;k++){
+		total1 = 0;
+		total2 = 0;
+		total3 = 0;
+		total4 = 0;
+		total12 = 0;
+		total22 = 0;
+		total32 = 0;
+		total42 = 0;
 
-	for(j=0;j<=3;j++)
-	{
-		if (get(x-k+j,y) == farbe) {summe1++};
-		if (get(x,y-k+j) == farbe) {summe2++};
-		if (get(x-k+j,y-k+j) == farbe) {summe3++};
-		if (get(x+k-j,y-k+j) == farbe) {summe4++};
-		if (get(x-k+j,y) == farbe2) {summe12++};
-		if (get(x,y-k+j) == farbe2) {summe22++};
-		if (get(x-k+j,y-k+j) == farbe2) {summe32++};
-		if (get(x+k-j,y-k+j) == farbe2) {summe42++};
-		if (get(x-k+j,y) == ausserhalb) {summe12++};
-		if (get(x,y-k+j) == ausserhalb) {summe22++};
-		if (get(x-k+j,y-k+j) == ausserhalb) {summe32++};
-		if (get(x+k-j,y-k+j) == ausserhalb) {summe42++};
-	}
-		if ((summe1 >= menge) && (summe12 == 0)) {ja = true} else
-		if ((summe2 >= menge) && (summe22 == 0)) {ja = true} else
-		if ((summe3 >= menge) && (summe32 == 0)) {ja = true} else
-		if ((summe4 >= menge) && (summe42 == 0)) ja = true;
-
-
-		if ((ja == true) && (pruefe_bei_2 == true))
-		{
-			summe12 = 0;
-			summe22 = 0;
-			summe32 = 0;
-			summe42 = 0;
-			feld[x][y] = farbe;
-			hoehe[x]--;
-
-		for(j=0;j<=3;j++)
-			{
-			if ((summe1 >= menge) && (get(x-k+j,y) == leer) && (get(x-k+j,hoehe[x-k+j]+1) == leer)) summe12++;
-			if ((summe2 >= menge) && (get(x,y-k+j) == leer) && (get(x,hoehe[x]+1) == leer)) summe22++;
-			if ((summe3 >= menge) && (get(x-k+j,y-k+j) == leer) && (get(x-k+j,hoehe[x-k+j]+1) == leer)) summe32++;
-			if ((summe4 >= menge) && (get(x+k-j,y-k+j) == leer) && (get(x+k-j,hoehe[x+k-j]+1) == leer)) summe42++;
+	
+		for(j=0;j<=3;j++){
+			if (get(x-k+j,y) == color) {total1++;};
+			if (get(x,y-k+j) == color) {total2++;};
+			if (get(x-k+j,y-k+j) == color) {total3++;};
+			if (get(x+k-j,y-k+j) == color) {total4++;};
+			if (get(x-k+j,y) == color2) {total12++;};
+			if (get(x,y-k+j) == color2) {total22++;};
+			if (get(x-k+j,y-k+j) == color2) {total32++;};
+			if (get(x+k-j,y-k+j) == color2) {total42++;};
+			if (get(x-k+j,y) == outside) {total12++;};
+			if (get(x,y-k+j) == outside) {total22++;};
+			if (get(x-k+j,y-k+j) == outside) {total32++;};
+			if (get(x+k-j,y-k+j) == outside) {total42++;};
 		}
-			if ((summe12 == 1) || (summe22 == 1) || (summe32 == 1) || (summe42 == 1)) ja = false;
-			hoehe[x]++;
-			feld[x][y] = leer;
+		
+		if ((total1 >= menge) && (total12 == 0)) {yes = true;} else
+		if ((total2 >= menge) && (total22 == 0)) {yes = true;} else
+		if ((total3 >= menge) && (total32 == 0)) {yes = true;} else
+		if ((total4 >= menge) && (total42 == 0)) yes = true;
+
+
+		if ((yes == true) && (check_with_2 == true)){
+			total12 = 0;
+			total22 = 0;
+			total32 = 0;
+			total42 = 0;
+			field[x][y] = color;
+			height[x]--;
+
+			for(j=0;j<=3;j++){
+				if ((total1 >= menge) && (get(x-k+j,y) == read) && (get(x-k+j,height[x-k+j]+1) == read)) total12++;
+				if ((total2 >= menge) && (get(x,y-k+j) == read) && (get(x,height[x]+1) == read)) total22++;
+				if ((total3 >= menge) && (get(x-k+j,y-k+j) == read) && (get(x-k+j,height[x-k+j]+1) == read)) total32++;
+				if ((total4 >= menge) && (get(x+k-j,y-k+j) == read) && (get(x+k-j,height[x+k-j]+1) == read)) total42++;
+			}
+			if ((total12 == 1) || (total22 == 1) || (total32 == 1) || (total42 == 1)) yes = false;
+			height[x]++;
+			field[x][y] = read;
 		}
 	}
-return ja;
+return yes;
 }
 
-function computer()
-{
+function computer(){
 	var x,i,j,k;
-	var spalte;
-	var zaehler;
+	var column;
+	var count;
 	chance = new Array(0,0,0,0,0,0,0);
 
 	chance[0] = 13+Math.random()*4;
@@ -153,138 +137,136 @@ function computer()
 	chance[5] = 13+Math.random()*4;
 	chance[6] = 13+Math.random()*4;
 
-	for (i=0;i<=6;i++) if (hoehe[i] < 0) chance[i] = chance[i]-30000;
+	for (i=0;i<=6;i++) if (height[i] < 0) chance[i] = chance[i]-30000;
 	
 	for (i=0;i<=6;i++)
 	{
-		//Gewonnen
-		if (pruefe(i,hoehe[i],3,gelb,false) == true) chance[i] = chance[i] + 20000;
+		//won
+		if (check(i,height[i],3,yellow,false) == true) chance[i] = chance[i] + 20000;
 
 		//anderer versucht zu gewinnen
-		if (pruefe(i,hoehe[i],3,rot,false) == true) chance[i] = chance[i] + 10000;
+		if (check(i,height[i],3,red,false) == true) chance[i] = chance[i] + 10000;
 
-		//ber einem 3 rot
-		if (pruefe(i,hoehe[i]-1,3,rot,false) == true) chance[i] = chance[i] -4000;
+		//ber einem 3 red
+		if (check(i,height[i]-1,3,red,false) == true) chance[i] = chance[i] -4000;
 
-		//ber einem 3 gelb
-		if (pruefe(i,hoehe[i]-1,3,gelb,false) == true) chance[i] = chance[i] -200;
+		//ber einem 3 yellow
+		if (check(i,height[i]-1,3,yellow,false) == true) chance[i] = chance[i] -200;
 
 		//2 auf 3 verhindern
-		if (pruefe(i,hoehe[i],2,rot,false) == true) chance[i] = chance[i] +50+Math.random()*3;
+		if (check(i,height[i],2,red,false) == true) chance[i] = chance[i] +50+Math.random()*3;
 
 		//2 auf 3 ermöglichen, aber nicht wenn anderer die 3 ausschalten kann
-		if ((pruefe(i,hoehe[i],2,gelb,true) == true) && (hoehe[i] > 0))
+		if ((check(i,height[i],2,yellow,true) == true) && (height[i] > 0))
 		{
-			feld[i][hoehe[i]] = gelb;
-			hoehe[i]--;
-			zaehler = 0;
-			for(j=0;j<=6;j++) if(pruefe(j,hoehe[j],3,gelb,false) == true) zaehler++;
-			if (zaehler == 0) {chance[i] = chance[i] +60+Math.random()*2} else {chance[i] = chance[i] - 60}
-			hoehe[i]++;
-			feld[i][hoehe[i]] = leer;
+			field[i][height[i]] = yellow;
+			height[i]--;
+			count = 0;
+			for(j=0;j<=6;j++) if(check(j,height[j],3,yellow,false) == true) count++;
+			if (count == 0) {chance[i] = chance[i] +60+Math.random()*2} else {chance[i] = chance[i] - 60}
+			height[i]++;
+			field[i][height[i]] = read;
 	}
 
 
-		//nein wenn rot drüber
-		if (pruefe(i,hoehe[i]-1,2,rot,false) == true) chance[i] = chance[i] -10;
+		//nein wenn red drüber
+		if (check(i,height[i]-1,2,red,false) == true) chance[i] = chance[i] -10;
 
-		//nein wenn gelb drüber
-		if (pruefe(i,hoehe[i]-1,2,gelb,false) == true) chance[i] = chance[i] -8;
+		//nein wenn yellow drüber
+		if (check(i,height[i]-1,2,yellow,false) == true) chance[i] = chance[i] -8;
 
 		//1 auf 2 verhindern
-		if (pruefe(i,hoehe[i],1,rot,false) == true) chance[i] = chance[i] +5+Math.random()*2;
+		if (check(i,height[i],1,red,false) == true) chance[i] = chance[i] +5+Math.random()*2;
 
 		//1 auf 2 ermöglichen
-		if (pruefe(i,hoehe[i],1,gelb,false) == true) chance[i] = chance[i] +5+Math.random()*2;
+		if (check(i,height[i],1,yellow,false) == true) chance[i] = chance[i] +5+Math.random()*2;
 	
 
-		//nein wenn rot drüber
-		if (pruefe(i,hoehe[i]-1,1,rot,false) == true) chance[i] = chance[i] -2;
+		//nein wenn red drüber
+		if (check(i,height[i]-1,1,red,false) == true) chance[i] = chance[i] -2;
 
 
-		//ja wenn gelb drüber
-		if (pruefe(i,hoehe[i]-1,1,gelb,false) == true) chance[i] = chance[i] +1;
+		//if it is yellow then 
+		if (check(i,height[i]-1,1,yellow,false) == true) chance[i] = chance[i] +1;
 
 
-		//möglichkeit zum austricksen suchen
-		if ((pruefe(i,hoehe[i],2,gelb,true) == true) && (hoehe[i] > 0)) 
+		//look for tricks that can be played
+		if ((check(i,height[i],2,yellow,true) == true) && (height[i] > 0)) 
 		{
-			feld[i][hoehe[i]] = gelb;
-			hoehe[i]--;
+			field[i][height[i]] = yellow;
+			height[i]--;
 			for(k=0;k<=6;k++)       
-				if ((pruefe(k,hoehe[k],3,gelb,false) == true) && (hoehe[k] > 0)) 
+				if ((check(k,height[k],3,yellow,false) == true) && (height[k] > 0)) 
 				{
-					feld[k][hoehe[k]] = rot;
-					hoehe[k]--;
+					field[k][height[k]] = red;
+					height[k]--;
 					for(j=0;j<=6;j++) 
-						if (pruefe(j,hoehe[j],3,gelb,false) == true) chance[i] = chance[i] + 2000;
-					hoehe[k]++;
-					feld[k][hoehe[k]] = leer;
+						if (check(j,height[j],3,yellow,false) == true) chance[i] = chance[i] + 2000;
+					height[k]++;
+					field[k][height[k]] = read;
 				}
-			hoehe[i]++;
-			feld[i][hoehe[i]] = leer;
+			height[i]++;
+			field[i][height[i]] = read;
 		}
 
-		//prüfen ob anderer austricksen kann
-		if ((pruefe(i,hoehe[i],2,rot,true) == true) && (hoehe[i] > 0)) 
+		//check if some one can trick the other player
+		if ((check(i,height[i],2,red,true) == true) && (height[i] > 0)) 
 		{
-			feld[i][hoehe[i]] = rot;
-			hoehe[i]--;
+			field[i][height[i]] = red;
+			height[i]--;
 			for(k=0;k<=6;k++)
-				if ((pruefe(k,hoehe[k],3,rot,false) == true) && (hoehe[k] > 0)) 
+				if ((check(k,height[k],3,red,false) == true) && (height[k] > 0)) 
 				{
-					feld[k][hoehe[k]] = gelb;
-					hoehe[k]--;
+					field[k][height[k]] = yellow;
+					height[k]--;
 					for(j=0;j<=6;j++)
-						if (pruefe(j,hoehe[j],3,rot,false) == true) chance[i] = chance[i] + 1000;
-					hoehe[k]++;
-					feld[k][hoehe[k]] = leer;
+						if (check(j,height[j],3,red,false) == true) chance[i] = chance[i] + 1000;
+					height[k]++;
+					field[k][height[k]] = read;
 				}
-			hoehe[i]++;
-			feld[i][hoehe[i]] = leer;
+			height[i]++;
+			field[i][height[i]] = read;
 		}       
 
 
-//prüfen ob anderer austricksen kann wenn ich ins feld reingehe
-		if ((pruefe(i,hoehe[i]-1,2,rot,true) == true) && (hoehe[i] > 1))
+//prüfen ob anderer austricksen kann wenn ich ins field reingehe
+		if ((check(i,height[i]-1,2,red,true) == true) && (height[i] > 1))
 		{
-			feld[i][hoehe[i]] = rot;
-			hoehe[i]--;
+			field[i][height[i]] = red;
+			height[i]--;
 			for(k=0;k<=6;k++)
-				if ((pruefe(k,hoehe[k]-1,3,rot,false) == true) && (hoehe[k] > 0))
+				if ((check(k,height[k]-1,3,red,false) == true) && (height[k] > 0))
 				{
-					feld[k][hoehe[k]] = gelb;
-					hoehe[k]--;
+					field[k][height[k]] = yellow;
+					height[k]--;
 					for(j=0;j<=6;j++)
-						if (pruefe(j,hoehe[j]-1,3,rot,false) == true) chance[i] = chance[i] - 500;
-					hoehe[k]++;
-					feld[k][hoehe[k]] = leer;
+						if (check(j,height[j]-1,3,red,false) == true) chance[i] = chance[i] - 500;
+					height[k]++;
+					field[k][height[k]] = read;
 				}
-			hoehe[i]++;
-			feld[i][hoehe[i]] = leer;
+			height[i]++;
+			field[i][height[i]] = read;
 		}
+	}
 
-
-	}//for
-
-	spalte = 0;
+	column = 0;
 	x = -10000;
 	for(i=0;i<=6;i++)
 	if (chance[i] > x)
 	{
 		x = chance[i];
-		spalte = i;
+		column = i;
 	}
 
-	feld[spalte][hoehe[spalte]] = gelb;
-	hoehe[spalte] = hoehe[spalte] - 1;
-	put(spalte,gelb);
-	if (pruefe(spalte,hoehe[spalte]+1,4,gelb,false) == true) 
+	field[column][height[column]] = yellow;
+	height[column] = height[column] - 1;
+	put(column,yellow);
+	if (check(column,height[column]+1,4,yellow,false) == true) 
 	{
 		alert("You have lost");
 		location.reload();
 	}
-	if ((hoehe[0] == -1) && (hoehe[1] == -1) && (hoehe[2] == -1) && (hoehe[3] == -1) && (hoehe[4] == -1)  && (hoehe[5] == -1) && (hoehe[6] == -1)) 
+	if ((height[0] == -1) && (height[1] == -1) && (height[2] == -1) && (height[3] == -1) && (height[4] == -1)  && (height[5] == -1) && (height[6] == -1)) 
 	{
 		alert("Draw game");
 		location.reload();
