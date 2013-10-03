@@ -1,7 +1,8 @@
-red = 1
-yellow = 2
-outside = 3
-read = 0
+red = 1;
+yellow = 2;
+outside = 3;
+read = 0;
+
 
 field =  new Array(0,0,0,0,0,0,0);
 	field[0] = new Array(0,0,0,0,0,0);
@@ -26,7 +27,7 @@ function get(column, row){
 function put(column,color){
 		if (color == red) 
 			document.getElementById("board").innerHTML = document.getElementById("board").innerHTML + 
-			'<div style="position:absolute; top:'+(height[column]*60+62)+'px; left:'+(column*60-1)+'px;"><img src="red.png" width=66 height = 66> </div>';
+			'<div style="position:absolute; top:'+(height[column]*60+68)+'px; left:'+(column*60+3)+'px;"><img src="red.png" width=55 height = 55> </div>';
 		if (color == yellow) 
 			document.getElementById("board").innerHTML = document.getElementById("board").innerHTML + 
 			'<div style="position:absolute; top:'+(height[column]*60+68)+'px; left:'+(column*60+3)+'px;"><img src="yellow.png" width=55 height = 55> </div>';
@@ -37,7 +38,7 @@ var won=false;
 
 function set(column){
 	if (height[column] == -1){
-		alert("column full")	
+		alert("column full");	
 	}
 	else
 	{
@@ -163,7 +164,7 @@ function computer(){
 			height[i]--;
 			count = 0;
 			for(j=0;j<=6;j++) if(check(j,height[j],3,yellow,false) == true) count++;
-			if (count == 0) {chance[i] = chance[i] +60+Math.random()*2} else {chance[i] = chance[i] - 60}
+			if (count == 0) {chance[i] = chance[i] +60+Math.random()*2;} else {chance[i] = chance[i] - 60;}
 			height[i]++;
 			field[i][height[i]] = read;
 	}
