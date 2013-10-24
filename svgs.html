@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Connect Four in Javascript</title>
+<meta name="keywords" content="connect four"><meta name="description" content="Small Javascript version of connect four">
+<meta name="author" content="Kalm, Demma, Behrens">
+<link rel="stylesheet" type="text/css" href="style.css">
+<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="./index_files/d3.v3.min.js"></script>
+
+
+</head>
+<body bgcolor="#EEEFE4" style="background-color:#4b5980; background-image:url(background.jpg); background-repeat:repeat-y;">
+<div id="wrap">
+        <div id="header"><h1>4 Consecutive Pucks Game</h1></div>
+        <div id="nav">
+                <ul>
+        			<li><a href="index.html">Play The Game</a></li>
+        			<li><a href="about.html">About Us</a></li>
+        			<li><a href="svgs.html">SVG Images</a></li>
+        			<li><a href="/">Nav 4</a></li>
+        			<li><a href="/">Nav 5</a></li>
+                </ul>
+        </div>
+        <div id="main">
+                <div style="position:relative;">
+                <p>
+    			<svg width="350" height="300" viewBox="0 0 350 300" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<defs>
+					<circle id="empty" cx=".5" cy=".5" r=".4" style="fill:white;stroke:black;stroke-width:.05;"></circle>
+					<circle id="yellow" cx=".5" cy=".5" r=".4" style="fill:yellow;stroke:black;stroke-width:.05;"></circle>
+					<circle id="red" cx=".5" cy=".5" r=".4" style="fill:red;stroke:black;stroke-width:.05;"></circle>
+	
+				</defs>
+				<g transform="scale(50,50) translate(-1,-1)">
+				<rect x="0" y="0" width="8" height="7" fill="blue"></rect>
+
+					<use xlink:href="#empty" x="1" y="1"></use>
+					<use xlink:href="#empty" x="2" y="1"></use>
+					<use xlink:href="#empty" x="3" y="1"></use>
+					<use xlink:href="#empty" x="4" y="1"></use>
+					<use xlink:href="#empty" x="5" y="1"></use>
+					<use xlink:href="#empty" x="6" y="1"></use>
+					<use xlink:href="#empty" x="7" y="1"></use>
+	
+					<use xlink:href="#empty" x="1" y="2"></use>
+					<use xlink:href="#empty" x="2" y="2"></use>
+					<use xlink:href="#red" x="3" y="2"></use>
+					<use xlink:href="#yellow" x="4" y="2"></use>
+					<use xlink:href="#empty" x="5" y="2"></use>
+					<use xlink:href="#empty" x="6" y="2"></use>
+					<use xlink:href="#empty" x="7" y="2"></use>
+	
+					<use xlink:href="#empty" x="1" y="3"></use>
+					<use xlink:href="#empty" x="2" y="3"></use>
+					<use xlink:href="#yellow" x="3" y="3"></use>
+					<use xlink:href="#yellow" x="4" y="3"></use>
+					<use xlink:href="#yellow" x="5" y="3"></use>
+					<use xlink:href="#red" x="6" y="3"></use>
+					<use xlink:href="#empty" x="7" y="3"></use>
+	
+					<use xlink:href="#empty" x="1" y="4"></use>
+					<use xlink:href="#empty" x="2" y="4"></use>
+					<use xlink:href="#red" x="3" y="4"></use>
+					<use xlink:href="#red" x="4" y="4"></use>
+					<use xlink:href="#yellow" x="5" y="4"></use>
+					<use xlink:href="#yellow" x="6" y="4"></use>
+					<use xlink:href="#empty" x="7" y="4"></use>
+	
+					<use xlink:href="#empty" x="1" y="5"></use>
+					<use xlink:href="#empty" x="2" y="5"></use>
+					<use xlink:href="#red" x="3" y="5"></use>
+					<use xlink:href="#yellow" x="4" y="5"></use>
+					<use xlink:href="#red" x="5" y="5"></use>
+					<use xlink:href="#yellow" x="6" y="5"></use>
+					<use xlink:href="#empty" x="7" y="5"></use>
+	
+					<use xlink:href="#empty" x="1" y="6"></use>
+					<use xlink:href="#yellow" x="2" y="6"></use>
+					<use xlink:href="#red" x="3" y="6"></use>
+					<use xlink:href="#red" x="4" y="6"></use>
+					<use xlink:href="#red" x="5" y="6"></use>
+					<use xlink:href="#yellow" x="6" y="6"></use>
+					<use xlink:href="#red" x="7" y="6"></use>
+				</g>	
+
+			</svg>
+
+                </p>
+                <br clear="all">
+
+        	<div id="board"></div>
+
+                        
+                
+                
+        </div>
+        <div id="sidebar">
+                <h2>High Scores</h2>
+                <p>Here are some high scores</p>
+                <ul>
+                        <li><a href="file:///">Link 1</a></li>
+                        <li><a href="file:///">Link 2</a></li>
+                        <li><a href="file:///">Link 3</a></li>
+                        <li><a href="file:///">Link 4</a></li>
+                        <li><a href="file:///">Link 5</a></li>
+                        <li><a href="file:///">Link 6</a></li>
+                        <li><a href="file:///">Link 7</a></li>
+                        <li><a href="file:///">Link 8</a></li>
+                        <li><a href="file:///">Link 9</a></li>
+                        <li><a href="file:///">Link 10</a></li>
+                        <li><a href="file:///">Link 11</a></li>
+                        <li><a href="file:///">Link 12</a></li>
+                        <li><a href="file:///">Link 13</a></li>
+                        <li><a href="file:///">Link 14</a></li>
+                        <li><a href="file:///">Link 15</a></li>
+                </ul>
+        </div>
+        <div id="footer">
+                <p>Footer</p>
+        </div>
+</div>
+</body>
+</html>

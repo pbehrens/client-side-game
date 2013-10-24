@@ -3,8 +3,8 @@ yellow = 2;
 outside = 3;
 read = 0;
 
-
-field =  new Array(0,0,0,0,0,0,0);
+//create 2d array for storing the pucks
+    field =  new Array(0,0,0,0,0,0,0);
 	field[0] = new Array(0,0,0,0,0,0);
 	field[1] = new Array(0,0,0,0,0,0);
 	field[2] = new Array(0,0,0,0,0,0);
@@ -13,7 +13,9 @@ field =  new Array(0,0,0,0,0,0,0);
 	field[5] = new Array(0,0,0,0,0,0);
 	field[6] = new Array(0,0,0,0,0,0);
 
+    //set the height of the board for the pucks
 height =  new Array(5,5,5,5,5,5,5); 
+
 
 function get(column, row){
 	if ((column < 0) || (column > 6) || (row < 0) || (row > 5)) {
@@ -38,7 +40,7 @@ var won=false;
 
 function set(column){
 	if (height[column] == -1){
-		alert("column full");	
+		alert("This column is full");	
 	}
 	else
 	{
@@ -130,6 +132,7 @@ function computer(){
 	var count;
 	chance = new Array(0,0,0,0,0,0,0);
 
+    // set some sort of random number for the computer AI to make a decision that is some what educated, but also fauly in some way
 	chance[0] = 13+Math.random()*4;
 	chance[1] = 13+Math.random()*4;
 	chance[2] = 16+Math.random()*4;
@@ -145,19 +148,19 @@ function computer(){
 		//won
 		if (check(i,height[i],3,yellow,false) == true) chance[i] = chance[i] + 20000;
 
-		//anderer versucht zu gewinnen
+		
 		if (check(i,height[i],3,red,false) == true) chance[i] = chance[i] + 10000;
 
-		//ber einem 3 red
+		//threre are 3 reds in a row
 		if (check(i,height[i]-1,3,red,false) == true) chance[i] = chance[i] -4000;
 
-		//ber einem 3 yellow
+		//there are 3 yellow in a row somehwere
 		if (check(i,height[i]-1,3,yellow,false) == true) chance[i] = chance[i] -200;
 
-		//2 auf 3 verhindern
+		//
 		if (check(i,height[i],2,red,false) == true) chance[i] = chance[i] +50+Math.random()*3;
 
-		//2 auf 3 ermöglichen, aber nicht wenn anderer die 3 ausschalten kann
+		//
 		if ((check(i,height[i],2,yellow,true) == true) && (height[i] > 0))
 		{
 			field[i][height[i]] = yellow;
@@ -170,20 +173,16 @@ function computer(){
 	}
 
 
-		//nein wenn red drüber
+		
 		if (check(i,height[i]-1,2,red,false) == true) chance[i] = chance[i] -10;
 
-		//nein wenn yellow drüber
 		if (check(i,height[i]-1,2,yellow,false) == true) chance[i] = chance[i] -8;
 
-		//1 auf 2 verhindern
 		if (check(i,height[i],1,red,false) == true) chance[i] = chance[i] +5+Math.random()*2;
 
-		//1 auf 2 ermöglichen
 		if (check(i,height[i],1,yellow,false) == true) chance[i] = chance[i] +5+Math.random()*2;
 	
 
-		//nein wenn red drüber
 		if (check(i,height[i]-1,1,red,false) == true) chance[i] = chance[i] -2;
 
 
@@ -230,7 +229,6 @@ function computer(){
 		}       
 
 
-//prüfen ob anderer austricksen kann wenn ich ins field reingehe
 		if ((check(i,height[i]-1,2,red,true) == true) && (height[i] > 1))
 		{
 			field[i][height[i]] = red;
