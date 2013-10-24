@@ -19,28 +19,28 @@ body{
 	margin:0 auto;
 	background:#ffffff;
 }
-#header {
+header {
    	padding:5px 10px;
 	background:#ffffff;
 }
 h1 {
     margin:0;
    }
-#nav {
+nav {
 	padding:5px 10px;
 	background:#ffffff;
 }
-#nav ul {
+nav ul {
 	margin:0;
 	padding:0;
 	list-style:none;
 }
-#nav li {
+nav li {
 	display:inline;
 	margin:0;
 	padding:0;
 }
-#main {
+article {
 	float:left;
 	width:480px;
 	padding:10px;
@@ -55,15 +55,15 @@ h2 {
 	padding:10px;
 	background:#ffffff;
 }
-#footer {
+footer {
 	clear:both;
 	padding:5px 10px;
 	background:#ffffff;
 }
-#footer p {
+footer p {
 	margin:0;
    }
-* html #footer {
+* html footer {
 	height:1px;
 }
 

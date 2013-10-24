@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Connect Four in Javascript</title>
 <meta name="keywords" content="connect four"><meta name="description" content="Small Javascript version of connect four">
@@ -11,17 +11,15 @@
 </head>
 <body bgcolor="#EEEFE4" style="background-color:#4b5980; background-image:url(background.jpg); background-repeat:repeat-y;">
 <div id="wrap">
-        <div id="header"><h1>4 Consecutive Pucks Game</h1></div>
-        <div id="nav">
+        <header><h1>4 Consecutive Pucks Game</h1></header>
+        <nav>
                 <ul>
         			<li><a href="index.html">Play The Game</a></li>
         			<li><a href="about.html">About Us</a></li>
         			<li><a href="svgs.html">SVG Images</a></li>
-        			<li><a href="/">Nav 4</a></li>
-        			<li><a href="/">Nav 5</a></li>
                 </ul>
-        </div>
-        <div id="main">
+        </nav>
+        <article>
                 <div style="position:relative;">
                 <p>
     			<svg width="350" height="300" viewBox="0 0 350 300" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -29,11 +27,9 @@
 					<circle id="empty" cx=".5" cy=".5" r=".4" style="fill:white;stroke:black;stroke-width:.05;"></circle>
 					<circle id="yellow" cx=".5" cy=".5" r=".4" style="fill:yellow;stroke:black;stroke-width:.05;"></circle>
 					<circle id="red" cx=".5" cy=".5" r=".4" style="fill:red;stroke:black;stroke-width:.05;"></circle>
-	
 				</defs>
 				<g transform="scale(50,50) translate(-1,-1)">
 				<rect x="0" y="0" width="8" height="7" fill="blue"></rect>
-
 					<use xlink:href="#empty" x="1" y="1"></use>
 					<use xlink:href="#empty" x="2" y="1"></use>
 					<use xlink:href="#empty" x="3" y="1"></use>
@@ -82,19 +78,13 @@
 					<use xlink:href="#yellow" x="6" y="6"></use>
 					<use xlink:href="#red" x="7" y="6"></use>
 				</g>	
-
 			</svg>
-
                 </p>
                 <br clear="all">
 
-        	<div id="board"></div>
-
-                        
-                
-                
-        </div>
-        <div id="sidebar">
+        	<div id="board"></div>      
+        </article>
+        <!--<div id="sidebar">
                 <h2>High Scores</h2>
                 <p>Here are some high scores</p>
                 <ul>
@@ -114,10 +104,10 @@
                         <li><a href="file:///">Link 14</a></li>
                         <li><a href="file:///">Link 15</a></li>
                 </ul>
-        </div>
-        <div id="footer">
-                <p>Footer</p>
-        </div>
+        </div>-->
+        <footer>
+            Created by Katie Kalm, Patrick Behrens, Joeseph Demma
+        </footer>
 </div>
 </body>
 </html>

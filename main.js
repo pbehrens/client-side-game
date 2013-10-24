@@ -62,8 +62,11 @@ function set(column){
 			if (won != true) computer();
 	}
 }
-
-function check(x,y,menge,color,check_with_2){
+//check
+// x = xposition in the array y = y pos in array 
+// amount is the amount of computer pucks in a row
+// 
+function check(x,y,amount,color,check_with_2){
 
 	var i,j,k;
 	var total1,total2,total3,total4;
@@ -98,10 +101,10 @@ function check(x,y,menge,color,check_with_2){
 			if (get(x+k-j,y-k+j) == outside) {total42++;};
 		}
 		
-		if ((total1 >= menge) && (total12 == 0)) {yes = true;} else
-		if ((total2 >= menge) && (total22 == 0)) {yes = true;} else
-		if ((total3 >= menge) && (total32 == 0)) {yes = true;} else
-		if ((total4 >= menge) && (total42 == 0)) yes = true;
+		if ((total1 >= amount) && (total12 == 0)) {yes = true;} else
+		if ((total2 >= amount) && (total22 == 0)) {yes = true;} else
+		if ((total3 >= amount) && (total32 == 0)) {yes = true;} else
+		if ((total4 >= amount) && (total42 == 0)) yes = true;
 
 
 		if ((yes == true) && (check_with_2 == true)){
@@ -113,10 +116,10 @@ function check(x,y,menge,color,check_with_2){
 			height[x]--;
 
 			for(j=0;j<=3;j++){
-				if ((total1 >= menge) && (get(x-k+j,y) == read) && (get(x-k+j,height[x-k+j]+1) == read)) total12++;
-				if ((total2 >= menge) && (get(x,y-k+j) == read) && (get(x,height[x]+1) == read)) total22++;
-				if ((total3 >= menge) && (get(x-k+j,y-k+j) == read) && (get(x-k+j,height[x-k+j]+1) == read)) total32++;
-				if ((total4 >= menge) && (get(x+k-j,y-k+j) == read) && (get(x+k-j,height[x+k-j]+1) == read)) total42++;
+				if ((total1 >= amount) && (get(x-k+j,y) == read) && (get(x-k+j,height[x-k+j]+1) == read)) total12++;
+				if ((total2 >= amount) && (get(x,y-k+j) == read) && (get(x,height[x]+1) == read)) total22++;
+				if ((total3 >= amount) && (get(x-k+j,y-k+j) == read) && (get(x-k+j,height[x-k+j]+1) == read)) total32++;
+				if ((total4 >= amount) && (get(x+k-j,y-k+j) == read) && (get(x+k-j,height[x+k-j]+1) == read)) total42++;
 			}
 			if ((total12 == 1) || (total22 == 1) || (total32 == 1) || (total42 == 1)) yes = false;
 			height[x]++;
@@ -127,12 +130,13 @@ return yes;
 }
 
 function computer(){
+    // i is the column index, j in the row index 
 	var x,i,j,k;
 	var column;
 	var count;
 	chance = new Array(0,0,0,0,0,0,0);
 
-    // set some sort of random number for the computer AI to make a decision that is some what educated, but also fauly in some way
+    // set some sort of random number for the computer AI to make a decision that is somewhat educated, but also faulty in some way
 	chance[0] = 13+Math.random()*4;
 	chance[1] = 13+Math.random()*4;
 	chance[2] = 16+Math.random()*4;
@@ -161,8 +165,7 @@ function computer(){
 		if (check(i,height[i],2,red,false) == true) chance[i] = chance[i] +50+Math.random()*3;
 
 		//
-		if ((check(i,height[i],2,yellow,true) == true) && (height[i] > 0))
-		{
+		if ((check(i,height[i],2,yellow,true) == true) && (height[i] > 0)){
 			field[i][height[i]] = yellow;
 			height[i]--;
 			count = 0;
@@ -170,14 +173,14 @@ function computer(){
 			if (count == 0) {chance[i] = chance[i] +60+Math.random()*2;} else {chance[i] = chance[i] - 60;}
 			height[i]++;
 			field[i][height[i]] = read;
-	}
+	    }
 
 
 		
 		if (check(i,height[i]-1,2,red,false) == true) chance[i] = chance[i] -10;
 
 		if (check(i,height[i]-1,2,yellow,false) == true) chance[i] = chance[i] -8;
-
+        // use a random number to make the probabaility of winning lower
 		if (check(i,height[i],1,red,false) == true) chance[i] = chance[i] +5+Math.random()*2;
 
 		if (check(i,height[i],1,yellow,false) == true) chance[i] = chance[i] +5+Math.random()*2;
@@ -190,9 +193,8 @@ function computer(){
 		if (check(i,height[i]-1,1,yellow,false) == true) chance[i] = chance[i] +1;
 
 
-		//look for tricks that can be played
-		if ((check(i,height[i],2,yellow,true) == true) && (height[i] > 0)) 
-		{
+		//look for tricks that can be played in the certain columns
+		if ((check(i,height[i],2,yellow,true) == true) && (height[i] > 0)) {
 			field[i][height[i]] = yellow;
 			height[i]--;
 			for(k=0;k<=6;k++)       
